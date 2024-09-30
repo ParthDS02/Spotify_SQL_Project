@@ -2,10 +2,10 @@
 Project Category: Advanced
 [Click Here to get Dataset](https://www.kaggle.com/datasets/sanjanchaudhari/spotify-dataset)
 
-![Spotify Logo](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_logo.jpg)
+![Black-Spotify-Logo](https://github.com/user-attachments/assets/cc32572c-8348-4898-b7fd-452416920c82)
 
 ## Overview
-This project involves analyzing a Spotify dataset with various attributes about tracks, albums, and artists using **SQL**. It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and advanced), and optimizing query performance. The primary goals of the project are to practice advanced SQL skills and generate valuable insights from the dataset.
+This project analyzes Spotify data using SQL to perform exploratory data analysis (EDA) and complex queries. Key tasks include calculating correlations, ranking tracks, and aggregating metrics like streams, views, and likes. It also applies window functions to derive insights on top tracks, energy differences, and artist contributions.
 
 ```sql
 -- create table
@@ -66,48 +66,35 @@ In advanced stages, the focus shifts to improving query performance. Some optimi
   
 ---
 
-## 15 Practice Questions
+## Practice Questions
 
 ### Easy Level
 1. Retrieve the names of all tracks that have more than 1 billion streams.
 2. List all albums along with their respective artists.
-3. Get the total number of comments for tracks where `licensed = TRUE`.
-4. Find all tracks that belong to the album type `single`.
+3. Get the total number of comments for tracks where licensed = TRUE.
+4. Find all tracks that belong to the album type "single."
 5. Count the total number of tracks by each artist.
+6. Calculate the correlation between views and likes for each artist.
 
 ### Medium Level
 1. Calculate the average danceability of tracks in each album.
 2. Find the top 5 tracks with the highest energy values.
-3. List all tracks along with their views and likes where `official_video = TRUE`.
+3. List all tracks along with their views and likes where official_video = TRUE.
 4. For each album, calculate the total views of all associated tracks.
 5. Retrieve the track names that have been streamed on Spotify more than YouTube.
+6. Which album types generate the most streams?
+7. Find the top 10 most popular tracks (by views) that have low valence, and what is their average energy?
 
 ### Advanced Level
 1. Find the top 3 most-viewed tracks for each artist using window functions.
-2. Write a query to find tracks where the liveness score is above the average.
-3. **Use a `WITH` clause to calculate the difference between the highest and lowest energy values for tracks in each album.**
-```sql
-WITH cte
-AS
-(SELECT 
-	album,
-	MAX(energy) as highest_energy,
-	MIN(energy) as lowest_energery
-FROM spotify
-GROUP BY 1
-)
-SELECT 
-	album,
-	highest_energy - lowest_energery as energy_diff
-FROM cte
-ORDER BY 2 DESC
-```
-   
-5. Find tracks where the energy-to-liveness ratio is greater than 1.2.
-6. Calculate the cumulative sum of likes for tracks ordered by the number of views, using window functions.
-
-
-Here’s an updated section for your **Spotify Advanced SQL Project and Query Optimization** README, focusing on the query optimization task you performed. You can include the specific screenshots and graphs as described.
+2. Find tracks where the liveness score is above the average.
+3. Use a WITH clause to calculate the difference between the highest and lowest energy values for tracks in each album.
+4. Find tracks where the energy-to-liveness ratio is greater than 1.2.
+5. Calculate the cumulative sum of likes for tracks ordered by the number of views, using window functions.
+6. Calculate the percentage of total streams that each artist contributes relative to the overall streams on the platform.
+7. Identify the top 3 longest albums (by total track duration) for each artist.
+8. Find the most commented track for each album where speechiness is greater than 0.66.
+9. Identify tracks where the tempo is in the top 10% of all tracks.
 
 ---
 
@@ -120,8 +107,6 @@ To improve query performance, we carried out the following optimization process:
     - The query retrieved tracks based on the `artist` column, and the performance metrics were as follows:
         - Execution time (E.T.): **7 ms**
         - Planning time (P.T.): **0.17 ms**
-    - Below is the **screenshot** of the `EXPLAIN` result before optimization:
-      ![EXPLAIN Before Index](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_explain_before_index.png)
 
 - **Index Creation on the `artist` Column**
     - To optimize the query performance, we created an index on the `artist` column. This ensures faster retrieval of rows where the artist is queried.
@@ -129,49 +114,40 @@ To improve query performance, we carried out the following optimization process:
       ```sql
       CREATE INDEX idx_artist ON spotify_tracks(artist);
       ```
-
 - **Performance Analysis After Index Creation**
     - After creating the index, we ran the same query again and observed significant improvements in performance:
         - Execution time (E.T.): **0.153 ms**
         - Planning time (P.T.): **0.152 ms**
-    - Below is the **screenshot** of the `EXPLAIN` result after index creation:
-      ![EXPLAIN After Index](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_explain_after_index.png)
-
-- **Graphical Performance Comparison**
-    - A graph illustrating the comparison between the initial query execution time and the optimized query execution time after index creation.
-    - **Graph view** shows the significant drop in both execution and planning times:
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%203.png)
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%202.png)
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%201.png)
-
+     
 This optimization shows how indexing can drastically reduce query time, improving the overall performance of our database operations in the Spotify project.
 ---
+**Technology Suite**
 
-## Technology Stack
-- **Database**: PostgreSQL
-- **SQL Queries**: DDL, DML, Aggregations, Joins, Subqueries, Window Functions
-- **Tools**: pgAdmin 4 (or any SQL editor), PostgreSQL (via Homebrew, Docker, or direct installation)
+**Database: PostgreSQL**
 
-## How to Run the Project
-1. Install PostgreSQL and pgAdmin (if not already installed).
-2. Set up the database schema and tables using the provided normalization structure.
-3. Insert the sample data into the respective tables.
-4. Execute SQL queries to solve the listed problems.
-5. Explore query optimization techniques for large datasets.
+**SQL Queries:** Includes DDL (Data Definition Language), DML (Data Manipulation Language), aggregations, joins, subqueries, and window functions.
 
----
+**Tools:** Utilize pgAdmin 4 (or any SQL editor) along with PostgreSQL, which can be installed via Homebrew, Docker, or directly.
 
-## Next Steps
-- **Visualize the Data**: Use a data visualization tool like **Tableau** or **Power BI** to create dashboards based on the query results.
-- **Expand Dataset**: Add more rows to the dataset for broader analysis and scalability testing.
-- **Advanced Querying**: Dive deeper into query optimization and explore the performance of SQL queries on larger datasets.
+**Steps to Execute the Project**
+
+**Install PostgreSQL and pgAdmin:**
+
+Ensure you have PostgreSQL and pgAdmin installed on your machine. These tools are essential for managing your database and executing SQL queries.
+Set Up the Database Schema and Tables:
+
+Use the provided normalization structure to create the necessary database schema and tables. This step involves defining the structure of your data, which is crucial for ensuring data integrity and efficiency.
+Insert Sample Data:
+
+Populate the created tables with sample data. This allows you to test your queries and gain insights from the dataset you’re working with.
+Execute SQL Queries:
+
+Run the SQL queries designed to address the specified problems. This is where you will apply your SQL knowledge to extract meaningful information from the dataset.
+Explore Query Optimization Techniques:
+
+Investigate methods for optimizing your queries, especially when working with large datasets. Understanding how to write efficient queries can significantly improve performance and reduce execution tim
 
 ---
 
 ## Contributing
 If you would like to contribute to this project, feel free to fork the repository, submit pull requests, or raise issues.
-
----
-
-## License
-This project is licensed under the MIT License.
